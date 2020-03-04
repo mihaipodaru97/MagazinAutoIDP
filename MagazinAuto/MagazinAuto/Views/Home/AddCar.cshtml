@@ -1,0 +1,100 @@
+﻿@model MagazinAuto.Models.MasinaAdd
+@using MagazinAuto.Models
+
+@{
+    ViewData["Title"] = "AddCar";
+}
+
+<h1>AddCar</h1>
+
+<h4>MasinaAdd</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddCar" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Caroserie" class="control-label"></label>
+                @Html.DropDownList("Caroserie",
+                    new SelectList(Enum.GetValues(typeof(Caroserie))),
+                    "Alege Caroseria",
+                    new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Cutie" class="control-label"></label>
+                @Html.DropDownList("Cutie",
+                    new SelectList(Enum.GetValues(typeof(Cutie))),
+                    "Alege Cutia",
+                    new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Transmisie" class="control-label"></label>
+                @Html.DropDownList("Transmisie",
+                    new SelectList(Enum.GetValues(typeof(Transmisie))),
+                    "Alege Transmisia",
+                    new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label asp-for="NormaPoluare" class="control-label"></label>
+                @Html.DropDownList("NormaPoluare",
+                    new SelectList(Enum.GetValues(typeof(NormaPoluare))),
+                    "Alege Norma de poluare",
+                    new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Combustibil" class="control-label"></label>
+                @Html.DropDownList("Combustibil",
+                    new SelectList(Enum.GetValues(typeof(Combustibil))),
+                    "Alege Combustibilul",
+                    new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label asp-for="CP" class="control-label"></label>
+                <input asp-for="CP" class="form-control" />
+                <span asp-validation-for="CP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CapacitateCilindrica" class="control-label"></label>
+                <input asp-for="CapacitateCilindrica" class="form-control" />
+                <span asp-validation-for="CapacitateCilindrica" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Km" class="control-label"></label>
+                <input asp-for="Km" class="form-control" />
+                <span asp-validation-for="Km" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AnFabricatie" class="control-label"></label>
+                <input asp-for="AnFabricatie" class="form-control" />
+                <span asp-validation-for="AnFabricatie" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Marca" class="control-label"></label>
+                <input asp-for="Marca" class="form-control" />
+                <span asp-validation-for="Marca" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Model" class="control-label"></label>
+                <input asp-for="Model" class="form-control" />
+                <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descriere" class="control-label"></label>
+                <input asp-for="Descriere" class="form-control" />
+                <span asp-validation-for="Descriere" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Poza" class="control-label"></label>
+                <input type="file" asp-for="Poza" class="form-control" />
+                <span asp-validation-for="Poza" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
