@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MagazinAuto.Models;
 using System.IO;
-using System.Text;
 
 namespace MagazinAuto.Controllers
 {
@@ -15,20 +10,17 @@ namespace MagazinAuto.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private static List<MasinaView> list = new List<MasinaView>();
+        private readonly User currentUser;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, User currentUser)
         {
             _logger = logger;
+            this.currentUser = currentUser;
         }
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            return RedirectToAction("ViewCars");
         }
 
         [HttpGet]
@@ -40,8 +32,12 @@ namespace MagazinAuto.Controllers
         [HttpGet]
         public IActionResult AddCar()
         {
+            if (!currentUser.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
             var model = new MasinaAdd();
-            model.ProprietarId = Guid.NewGuid();
 
             return View(model);
         }
@@ -49,6 +45,16 @@ namespace MagazinAuto.Controllers
         [HttpPost]
         public IActionResult AddCar(MasinaAdd car)
         {
+            if (!currentUser.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(car);
+            }
+
             var newCar = new MasinaView
             {
                 AnFabricatie = car.AnFabricatie.Value,
@@ -61,14 +67,15 @@ namespace MagazinAuto.Controllers
                 Km = car.Km.Value,
                 Marca = car.Marca,
                 Model = car.Model,
+                Pret = car.Pret.Value,
                 NormaPoluare = car.NormaPoluare,
                 Transmisie = car.Transmisie,
                 Proprietar = new User
                 {
-                    Id = car.ProprietarId,
-                    Email = "podarumihai97@gmail.com",
-                    Nume = "Mihai",
-                    Telefon = "0724501858"
+                    Id = currentUser.Id,
+                    Email = currentUser.Email,
+                    Nume = currentUser.Nume,
+                    Telefon = currentUser.Telefon
                 }
             };
 
@@ -92,12 +99,6 @@ namespace MagazinAuto.Controllers
             list.Add(newCar);
 
             return RedirectToAction("ViewCars");
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

@@ -15,6 +15,7 @@
         public string Model { get; set; }
         public string Descriere { get; set; }
         public User Proprietar { get; set; }
+        public int Pret { get; set; }
         public byte[] Poza { get; set; }
     }
 }

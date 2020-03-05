@@ -4,24 +4,35 @@
     ViewData["Title"] = "ViewCars";
 }
 
-<h1>ViewCars</h1>
+<h1>Anunturi</h1>
 
 <div>
-    <h4>MasinaView</h4>
     <hr />
 
     @foreach (var car in Model)
     {
+        <div class="row" style="border: 1px solid black">
 
-        <img src="data:image/png;base64, @System.Convert.ToBase64String(car.Poza)" width="80" height="80" />
+            <div class="col-md-3">
+                <img src="data:image/png;base64, @System.Convert.ToBase64String(car.Poza)" width="300" height="150" />
+            </div>
 
-        <div class="row">
-            <span>@($"{nameof(car.Model)} : {car.Model}")</span><br />
-            <span>@($"{nameof(car.Marca)} : {car.Marca}")</span><br />
-            <span>@($"{nameof(car.Cutie)} : {car.Cutie}")</span><br />
-            <span>@($"{nameof(car.Transmisie)} : {car.Transmisie}")</span><br />
-            <span>@($"{nameof(car.Combustibil)} : {car.Combustibil}")</span><br />
+            <div class="col-md-3">
+                <span>@($"{nameof(car.Model)} : {car.Model}")</span><br />
+                <span>@($"{nameof(car.Marca)} : {car.Marca}")</span><br />
+                <span>@($"{nameof(car.Cutie)} : {car.Cutie}")</span><br />
+                <span>@($"{nameof(car.Transmisie)} : {car.Transmisie}")</span><br />
+                <span>@($"{nameof(car.Combustibil)} : {car.Combustibil}")</span><br />
+            </div>
+
+            <div class="col-md-3">
+                <span>@($"{nameof(car.Pret)} : {car.Pret} ") &euro;</span><br />
+                <span>@($"{nameof(car.Proprietar.Nume)} : {car.Proprietar.Nume}")</span><br />
+                <span>@($"{nameof(car.Proprietar.Telefon)} : {car.Proprietar.Telefon}")</span><br />
+            </div>
+
         </div>
+        <br />
     }
 
 </div>

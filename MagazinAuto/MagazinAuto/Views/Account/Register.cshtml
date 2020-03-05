@@ -1,0 +1,47 @@
+﻿@model RegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+<div style="float:left;padding-right:200px">
+    <img src="~/images/logo.jpg" />
+</div>
+<div style="padding-top:35px">
+    <div class="row">
+        <div class="col-md-4">
+            <h1 class="site-color">Register</h1>
+            <br />
+            <form asp-action="Register" style="margin-top:15px">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Email" class="site-color control-label"></label>
+                    <input asp-for="Email" required class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="site-color control-label"></label>
+                    <input asp-for="Password" required type="password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Telefon" class="site-color control-label"></label>
+                    <input asp-for="Telefon" required class="form-control" />
+                    <span asp-validation-for="Telefon" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Nume" class="site-color control-label"></label>
+                    <input asp-for="Nume" required class="form-control" />
+                    <span asp-validation-for="Nume" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Register" class="btn btn-default btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -8,5 +8,6 @@ namespace MagazinAuto.Models
         public string Nume { get; set; }
         public string Email { get; set; }
         public string Telefon { get; set; }
+        public bool IsAuthenticated { get; set; }
     }
 }
