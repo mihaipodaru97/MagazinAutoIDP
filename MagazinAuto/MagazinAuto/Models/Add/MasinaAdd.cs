@@ -6,6 +6,7 @@ namespace MagazinAuto.Models
 {
     public class MasinaAdd
     {
+        public Guid Id { get; set; }
         [Required]
         public Caroserie Caroserie { get; set; }
         [Required]

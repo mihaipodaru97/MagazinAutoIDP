@@ -1,7 +1,10 @@
-﻿namespace MagazinAuto.Models
+﻿using System;
+
+namespace MagazinAuto.Models
 {
     public class MasinaView
     {
+        public Guid Id { get; set; }
         public Caroserie Caroserie { get; set; }
         public Cutie Cutie { get; set; }
         public Transmisie Transmisie { get; set; }

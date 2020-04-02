@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using MagazinAuto.Models;
@@ -9,12 +10,13 @@ namespace MagazinAuto.Controllers
 {
     public class AccountController : Controller
     {
-        public static IList<RegisterModel> users = new List<RegisterModel>();
         private readonly User currentUser;
+        private readonly Services services;
         private const string schemeName = "Cookiesv2";
 
-        public AccountController(User currentUser)
+        public AccountController(User currentUser, Services services)
         {
+            this.services = services;
             this.currentUser = currentUser;
         }
 
@@ -39,7 +41,7 @@ namespace MagazinAuto.Controllers
                 return View(model);
             }
 
-            var user = users.SingleOrDefault(u => u.Email == model.Email && model.Password == u.Password);
+            var user = services.CheckUser(model.Email, model.Password);
 
             if(user == null)
             {
@@ -94,7 +96,7 @@ namespace MagazinAuto.Controllers
                 return View(model);
             }
 
-            var user = users.SingleOrDefault(u => u.Email == model.Email);
+            var user = services.GetUser(model.Email);
 
             if(user != null)
             {
@@ -103,7 +105,8 @@ namespace MagazinAuto.Controllers
                 return View(model);
             }
 
-            users.Add(model);
+            model.Id = Guid.NewGuid();
+            services.AddUser(model);
 
             return RedirectToAction("Login", "Account");
         }

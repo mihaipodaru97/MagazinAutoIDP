@@ -9,11 +9,12 @@ namespace MagazinAuto.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private static List<MasinaView> list = new List<MasinaView>();
         private readonly User currentUser;
+        private readonly Services services;
 
-        public HomeController(ILogger<HomeController> logger, User currentUser)
+        public HomeController(ILogger<HomeController> logger, User currentUser, Services services)
         {
+            this.services = services;
             _logger = logger;
             this.currentUser = currentUser;
         }
@@ -26,7 +27,7 @@ namespace MagazinAuto.Controllers
         [HttpGet]
         public IActionResult ViewCars()
         {
-            return View(list);
+            return View(services.GetCars());
         }
 
         [HttpGet]
@@ -55,48 +56,24 @@ namespace MagazinAuto.Controllers
                 return View(car);
             }
 
-            var newCar = new MasinaView
-            {
-                AnFabricatie = car.AnFabricatie.Value,
-                CapacitateCilindrica = car.CapacitateCilindrica.Value,
-                Caroserie = car.Caroserie,
-                Combustibil = car.Combustibil,
-                CP = car.CP.Value,
-                Cutie = car.Cutie,
-                Descriere = car.Descriere,
-                Km = car.Km.Value,
-                Marca = car.Marca,
-                Model = car.Model,
-                Pret = car.Pret.Value,
-                NormaPoluare = car.NormaPoluare,
-                Transmisie = car.Transmisie,
-                Proprietar = new User
-                {
-                    Id = currentUser.Id,
-                    Email = currentUser.Email,
-                    Nume = currentUser.Nume,
-                    Telefon = currentUser.Telefon
-                }
-            };
+            byte[] content = null;
 
             if (car.Poza != null)
             {
                 if (car.Poza.Length > 0)
                 {
 
-                    byte[] content = null;
+                    
                     using (var fs = car.Poza.OpenReadStream())
                     using (var ms = new MemoryStream())
                     {
                         fs.CopyTo(ms);
                         content = ms.ToArray();
                     }
-
-                    newCar.Poza = content;
                 }
             }
 
-            list.Add(newCar);
+            services.AddCar(car, currentUser.Id, content);
 
             return RedirectToAction("ViewCars");
         }

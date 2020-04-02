@@ -35,9 +35,12 @@ namespace MagazinAuto
                        options.LoginPath = new PathString("/Account/Login");
                    });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<Services>();
 
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation();
+
+            new DatabaseSetup(Configuration.GetConnectionString("Database")).Setup();
 
         }
 

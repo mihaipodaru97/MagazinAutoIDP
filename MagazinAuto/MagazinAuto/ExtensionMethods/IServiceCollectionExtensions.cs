@@ -15,16 +15,17 @@ namespace MagazinAuto.ExtensionMethods
             _ = services.AddScoped(serviceProvider =>
             {
                 var httpContextAccessor = serviceProvider.GetService<IHttpContextAccessor>();
+                var services = serviceProvider.GetService<Services>();
                 var email = httpContextAccessor.HttpContext.User
                                     .FindFirst(ClaimTypes.Email)?
                                     .Value;
 
-                var user = AccountController.users.SingleOrDefault(u => u.Email == email);
+                var user = services.GetUser(email);
 
                 return user == null ? new User() : new User
                 {
                     Email = user.Email,
-                    Id = Guid.NewGuid(),
+                    Id = user.Id,
                     Nume = user.Nume,
                     Telefon = user.Telefon,
                     IsAuthenticated = true

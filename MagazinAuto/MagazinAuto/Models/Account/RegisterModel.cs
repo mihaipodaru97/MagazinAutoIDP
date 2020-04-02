@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MagazinAuto.Models
 {
     public class RegisterModel
     {
+        public Guid Id { get; set; }
         [Required]
         [EmailAddress]
         public string Email { get; set; }
