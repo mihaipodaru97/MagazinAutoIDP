@@ -33,11 +33,6 @@ namespace MagazinAuto.Controllers
         [HttpGet]
         public IActionResult AddCar()
         {
-            if (!currentUser.IsAuthenticated)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
             var model = new MasinaAdd();
 
             return View(model);
@@ -46,11 +41,6 @@ namespace MagazinAuto.Controllers
         [HttpPost]
         public IActionResult AddCar(MasinaAdd car)
         {
-            if (!currentUser.IsAuthenticated)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
             if (!ModelState.IsValid)
             {
                 return View(car);
@@ -73,7 +63,7 @@ namespace MagazinAuto.Controllers
                 }
             }
 
-            services.AddCar(car, currentUser.Id, content);
+            services.AddCar(car, currentUser?.Id, content);
 
             return RedirectToAction("ViewCars");
         }

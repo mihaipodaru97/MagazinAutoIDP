@@ -75,6 +75,28 @@ namespace MagazinAuto
             }
         }
 
+        public Guid GetUser()
+        {
+            var sql = "SELECT * FROM public.users";
+            using (var connection = new NpgsqlConnection(connectionString))
+            {
+                using (var command = new NpgsqlCommand(sql, connection))
+                {
+                    connection.Open();
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (!reader.Read())
+                        {
+                            return Guid.Empty;
+                        }
+
+                        return (Guid)reader[0];
+                    }
+                }
+            }
+        }
+
         public User CheckUser(string email, string password)
         {
             var sql = "SELECT * FROM public.users WHERE email = @email AND parola = @parola";
@@ -112,8 +134,18 @@ namespace MagazinAuto
             }
         }
 
-        public void AddCar(MasinaAdd car, Guid userId, byte[] poza)
+        public void AddCar(MasinaAdd car, Guid? userId, byte[] poza)
         {
+            if(userId == null)
+            {
+                userId = GetUser();
+            }
+
+            if(userId == Guid.Empty)
+            {
+                return;
+            }
+
             var sql = "INSERT INTO public.anunturi VALUES(@id, @caroserie, @cutie, @transmisie, @normapoluare, @combustibil, @cp, @capacitatecilindrica," +
                 "@km, @pret, @anfabricatie, @marca, @model, @descriere, @proprietarid, @poza)";
             using (var connection = new NpgsqlConnection(connectionString))
