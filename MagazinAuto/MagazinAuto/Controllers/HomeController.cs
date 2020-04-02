@@ -41,11 +41,6 @@ namespace MagazinAuto.Controllers
         [HttpPost]
         public IActionResult AddCar(MasinaAdd car)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(car);
-            }
-
             byte[] content = null;
 
             if (car.Poza != null)
