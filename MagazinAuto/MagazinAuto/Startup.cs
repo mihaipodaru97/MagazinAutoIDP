@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using MagazinAuto.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -28,6 +30,8 @@ namespace MagazinAuto
             services.AddControllersWithViews();
             
             services.AddCurrentUser();
+            services.AddDataProtection()
+                .PersistKeysToFileSystem(new DirectoryInfo(@"/appdata"));
             services.AddAuthentication("Cookiesv2")
                    .AddCookie("Cookiesv2", options =>
                    {
