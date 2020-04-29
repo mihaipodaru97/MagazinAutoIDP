@@ -146,6 +146,8 @@ namespace MagazinAuto
                 return;
             }
 
+            car.Id = Guid.NewGuid();
+
             var sql = "INSERT INTO public.anunturi VALUES(@id, @caroserie, @cutie, @transmisie, @normapoluare, @combustibil, @cp, @capacitatecilindrica," +
                 "@km, @pret, @anfabricatie, @marca, @model, @descriere, @proprietarid, @poza)";
             using (var connection = new NpgsqlConnection(connectionString))
