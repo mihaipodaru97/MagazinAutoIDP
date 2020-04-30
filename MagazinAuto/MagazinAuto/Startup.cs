@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Prometheus;
 
 namespace MagazinAuto
 {
@@ -64,6 +65,8 @@ namespace MagazinAuto
             app.UseRouting();
 
             app.UseAuthentication();
+
+            app.UseMetricServer();
 
             app.UseEndpoints(endpoints =>
             {
